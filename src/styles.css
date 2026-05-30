@@ -1,0 +1,120 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-blue-dark: var(--brand-blue-dark);
+  --color-brand-green: var(--brand-green);
+  --color-brand-green-dark: var(--brand-green-dark);
+  --font-display: "Playfair Display", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.5rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.18 0.04 250);
+
+  --brand-blue: oklch(0.43 0.16 256);
+  --brand-blue-dark: oklch(0.30 0.13 258);
+  --brand-green: oklch(0.62 0.17 148);
+  --brand-green-dark: oklch(0.50 0.16 150);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.04 250);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.04 250);
+  --primary: var(--brand-blue);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: var(--brand-green);
+  --secondary-foreground: oklch(0.99 0 0);
+  --muted: oklch(0.97 0.01 250);
+  --muted-foreground: oklch(0.45 0.03 250);
+  --accent: oklch(0.95 0.04 150);
+  --accent-foreground: var(--brand-blue-dark);
+  --destructive: oklch(0.58 0.24 27);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.92 0.01 250);
+  --input: oklch(0.92 0.01 250);
+  --ring: var(--brand-blue);
+
+  --gradient-brand: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-green) 100%);
+  --gradient-hero: linear-gradient(135deg, oklch(0.20 0.08 258 / 0.85) 0%, oklch(0.35 0.13 256 / 0.7) 60%, oklch(0.45 0.15 150 / 0.55) 100%);
+  --shadow-elegant: 0 20px 50px -20px color-mix(in oklab, var(--brand-blue) 35%, transparent);
+  --shadow-card: 0 8px 30px -10px color-mix(in oklab, var(--brand-blue) 18%, transparent);
+}
+
+.dark {
+  --background: oklch(0.15 0.03 258);
+  --foreground: oklch(0.97 0 0);
+  --card: oklch(0.20 0.04 258);
+  --card-foreground: oklch(0.97 0 0);
+  --popover: oklch(0.20 0.04 258);
+  --popover-foreground: oklch(0.97 0 0);
+  --primary: var(--brand-green);
+  --primary-foreground: oklch(0.15 0.03 258);
+  --muted: oklch(0.25 0.04 258);
+  --muted-foreground: oklch(0.7 0.02 250);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: var(--brand-green);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
+}
+
+@layer utilities {
+  .bg-gradient-brand { background-image: var(--gradient-brand); }
+  .bg-gradient-hero { background-image: var(--gradient-hero); }
+  .text-gradient-brand {
+    background-image: var(--gradient-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .shadow-elegant { box-shadow: var(--shadow-elegant); }
+  .shadow-card { box-shadow: var(--shadow-card); }
+  .container-px { padding-inline: 1.25rem; }
+  @media (min-width: 768px) { .container-px { padding-inline: 2.5rem; } }
+  @media (min-width: 1280px) { .container-px { padding-inline: 5rem; } }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up { animation: fade-up 0.7s ease-out both; }
