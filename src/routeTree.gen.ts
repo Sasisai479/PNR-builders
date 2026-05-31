@@ -16,6 +16,8 @@ import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProjectsIndexRouteImport } from './routes/projects/index'
+import { Route as ProjectsSriAnanthaMeadowsRouteImport } from './routes/projects/sri-anantha-meadows'
 
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
@@ -52,24 +54,38 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProjectsRoute,
+} as any)
+const ProjectsSriAnanthaMeadowsRoute =
+  ProjectsSriAnanthaMeadowsRouteImport.update({
+    id: '/sri-anantha-meadows',
+    path: '/sri-anantha-meadows',
+    getParentRoute: () => ProjectsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
-  '/projects': typeof ProjectsRoute
+  '/projects': typeof ProjectsRouteWithChildren
   '/quote': typeof QuoteRoute
   '/services': typeof ServicesRoute
+  '/projects/sri-anantha-meadows': typeof ProjectsSriAnanthaMeadowsRoute
+  '/projects/': typeof ProjectsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
-  '/projects': typeof ProjectsRoute
   '/quote': typeof QuoteRoute
   '/services': typeof ServicesRoute
+  '/projects/sri-anantha-meadows': typeof ProjectsSriAnanthaMeadowsRoute
+  '/projects': typeof ProjectsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -77,9 +93,11 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
-  '/projects': typeof ProjectsRoute
+  '/projects': typeof ProjectsRouteWithChildren
   '/quote': typeof QuoteRoute
   '/services': typeof ServicesRoute
+  '/projects/sri-anantha-meadows': typeof ProjectsSriAnanthaMeadowsRoute
+  '/projects/': typeof ProjectsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,15 +109,18 @@ export interface FileRouteTypes {
     | '/projects'
     | '/quote'
     | '/services'
+    | '/projects/sri-anantha-meadows'
+    | '/projects/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/contact'
     | '/gallery'
-    | '/projects'
     | '/quote'
     | '/services'
+    | '/projects/sri-anantha-meadows'
+    | '/projects'
   id:
     | '__root__'
     | '/'
@@ -109,6 +130,8 @@ export interface FileRouteTypes {
     | '/projects'
     | '/quote'
     | '/services'
+    | '/projects/sri-anantha-meadows'
+    | '/projects/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -116,7 +139,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   GalleryRoute: typeof GalleryRoute
-  ProjectsRoute: typeof ProjectsRoute
+  ProjectsRoute: typeof ProjectsRouteWithChildren
   QuoteRoute: typeof QuoteRoute
   ServicesRoute: typeof ServicesRoute
 }
@@ -172,15 +195,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/projects/': {
+      id: '/projects/'
+      path: '/'
+      fullPath: '/projects/'
+      preLoaderRoute: typeof ProjectsIndexRouteImport
+      parentRoute: typeof ProjectsRoute
+    }
+    '/projects/sri-anantha-meadows': {
+      id: '/projects/sri-anantha-meadows'
+      path: '/sri-anantha-meadows'
+      fullPath: '/projects/sri-anantha-meadows'
+      preLoaderRoute: typeof ProjectsSriAnanthaMeadowsRouteImport
+      parentRoute: typeof ProjectsRoute
+    }
   }
 }
+
+interface ProjectsRouteChildren {
+  ProjectsSriAnanthaMeadowsRoute: typeof ProjectsSriAnanthaMeadowsRoute
+  ProjectsIndexRoute: typeof ProjectsIndexRoute
+}
+
+const ProjectsRouteChildren: ProjectsRouteChildren = {
+  ProjectsSriAnanthaMeadowsRoute: ProjectsSriAnanthaMeadowsRoute,
+  ProjectsIndexRoute: ProjectsIndexRoute,
+}
+
+const ProjectsRouteWithChildren = ProjectsRoute._addFileChildren(
+  ProjectsRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   GalleryRoute: GalleryRoute,
-  ProjectsRoute: ProjectsRoute,
+  ProjectsRoute: ProjectsRouteWithChildren,
   QuoteRoute: QuoteRoute,
   ServicesRoute: ServicesRoute,
 }

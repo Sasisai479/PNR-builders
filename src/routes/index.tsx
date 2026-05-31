@@ -55,12 +55,7 @@ const process = [
 ];
 
 const projects = [
-  { img: villa, name: "Skyline Villa", location: "Gachibowli, Hyderabad", type: "Luxury Villa", status: "Completed" },
-  { img: apartments, name: "PNR Heights", location: "Kondapur, Hyderabad", type: "Apartment", status: "Ongoing" },
-  { img: commercial, name: "PNR Corporate Park", location: "Madhapur, Hyderabad", type: "Commercial", status: "Completed" },
-  { img: house, name: "Lakeview Residence", location: "Tellapur, Hyderabad", type: "Individual House", status: "Completed" },
-  { img: farmhouse, name: "Green Acres", location: "Shankarpally", type: "Farm House", status: "Ongoing" },
-  { img: villa, name: "Royal Crest Villas", location: "Manikonda", type: "Luxury Villa", status: "Upcoming" },
+  { img: villa, name: "Sri Anantha Meadows", location: "Vikarabad, Telangana", type: "Premium Gated Community", status: "Ongoing" },
 ];
 
 const stats = [
@@ -266,7 +261,7 @@ function HomePage() {
         </div>
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((p) => (
-            <article key={p.name} className="group rounded-2xl overflow-hidden bg-card shadow-card hover:shadow-elegant transition">
+            <Link to="/projects/sri-anantha-meadows" key={p.name} className="group rounded-2xl overflow-hidden bg-card shadow-card hover:shadow-elegant transition block">
               <div className="aspect-[4/3] overflow-hidden">
                 <img src={p.img} alt={p.name} width={1280} height={896} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
               </div>
@@ -277,8 +272,12 @@ function HomePage() {
                 </div>
                 <h3 className="mt-3 text-xl font-bold text-brand-blue-dark">{p.name}</h3>
                 <p className="text-sm text-muted-foreground">{p.location}</p>
+                <div className="mt-4 flex items-center gap-2 text-brand-blue font-semibold group-hover:gap-3 transition-all">
+                  View Project Details
+                  <ArrowRight className="h-4 w-4" />
+                </div>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </section>
